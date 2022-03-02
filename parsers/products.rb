@@ -27,7 +27,7 @@ product['price'] = price ? price.text.strip.gsub(/[$,]/, '').to_f : nil
 availability_elem = html.at_css('#availability')
 
 if availability_elem
-    product['availability'] = availability_elem.text.downcase.include?('in stock')
+    product['availability'] = !availability_elem.text.downcase.include?('currently unavailable')
 else
     product['availabitily'] = nil
 end
