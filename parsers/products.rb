@@ -20,7 +20,7 @@ rating_elem = html.at_css('i.a-icon-star .a-icon-alt')
 rating_count = rating_elem ? rating_elem.text.strip.split(' ').first : nil
 product['rating'] = rating_count  =~ /^[0-9.]+$/ ? rating_count.to_f : nil
 
-price = html.at_css('.apexPriceToPay')
+price = html.at_css('.a-price .a-offscreen')
 
 product['price'] = price ? price.text.strip.gsub(/[$,]/, '').to_f : nil
 
