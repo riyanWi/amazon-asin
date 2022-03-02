@@ -8,7 +8,9 @@ product['asin'] = page['vars']['asin']
 
 product['title'] = html.at_css('#productTitle').text.strip
 
-product['seller'] = html.at_css('#sellerProfileTriggerId').text
+seller = html.css('#sellerProfileTriggerId')
+seller = seller ? html.css('a#bylineInfo').text.strip.downcase.gsub('visit the', '') : seller.text
+product['seller'] = seller.strip
 
 review_elem = html.at_css('#acrCustomerReviewText')
 review_count = review_elem ? review_elem.text.strip.split(' ').first.gsub(',', '') : nil
@@ -18,7 +20,9 @@ rating_elem = html.at_css('i.a-icon-star .a-icon-alt')
 rating_count = rating_elem ? rating_elem.text.strip.split(' ').first : nil
 product['rating'] = rating_count  =~ /^[0-9.]+$/ ? rating_count.to_f : nil
 
-product['price'] = html.at_css('.apexPriceToPay').text.strip.gsub(/[$,]/, '').to_f
+price = html.at_css('.apexPriceToPay')
+
+product['price'] = price ? price.text.strip.gsub(/[$,]/, '').to_f : nil
 
 availability_elem = html.at_css('#availability')
 
